@@ -719,6 +719,7 @@ body {
   font-weight: 600;
   margin: 1.2rem auto;
   text-align: center;
+  width: 100%;
 }
 
 [data-theme="light"] .match-datetime-badge {
