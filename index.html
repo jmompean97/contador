@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mundial 2026 — Cuenta Atrás</title>
+  <meta name="description"
+    content="Cuenta atrás en tiempo real para el Mundial de Fútbol FIFA 2026. Consulta los partidos de España, fechas, horarios y dónde verlos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="is-loading">
+  <!-- ════════ PRELOADER ════════ -->
+  <div id="loader" class="loader-wrapper">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <canvas id="particles-canvas"></canvas>
+  <div class="ambient-light"></div>
+
+  <!-- ════════ NAVBAR ════════ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+
+      <a href="#hero" class="nav-brand">
+        <span class="nav-brand-text">Mundial <strong>2026</strong></span>
+      </a>
+
+      <nav class="nav-links" id="nav-links" aria-label="Navegación principal">
+        <a href="#hero" class="nav-link active" id="nav-home">Inicio</a>
+        <a href="#spain-matches" class="nav-link" id="nav-spain">España</a>
+      </nav>
+
+      <!-- Toggle dark/light — diseño minimalista tipo chip -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema" title="Cambiar modo">
+        <span class="toggle-track">
+          <span class="toggle-thumb" id="toggle-thumb">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="2" x2="12" y2="4" />
+              <line x1="12" y1="20" x2="12" y2="22" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="2" y1="12" x2="4" y2="12" />
+              <line x1="20" y1="12" x2="22" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+            </svg>
+          </span>
+        </span>
+      </button>
+
+      <!-- Hamburger móvil -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- ════════ HERO — CONTADOR ════════ -->
+  <main>
+    <section class="hero" id="hero">
+
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>FIFA World Cup 2026™</span>
+      </div>
+
+      <div class="hosts">
+        <div class="host-flag" title="Estados Unidos"><img src="https://flagcdn.com/us.svg" class="img-flag" alt="USA">
+        </div>
+        <div class="host-flag" title="Canadá"><img src="https://flagcdn.com/ca.svg" class="img-flag" alt="Canadá"></div>
+        <div class="host-flag" title="México"><img src="https://flagcdn.com/mx.svg" class="img-flag" alt="México"></div>
+      </div>
+
+      <h1 class="title" id="main-title">
+        <span class="title-line line-1">MUNDIAL</span>
+        <span class="title-line line-2">2026</span>
+        <span class="title-line line-3">EMPIEZA EN</span>
+      </h1>
+
+      <div class="countdown-wrapper" id="countdown-wrapper">
+        <div class="countdown-grid">
+          <div class="time-block">
+            <div class="time-card">
+              <span class="time-value" id="days">00</span>
+              <span class="time-label">Días</span>
+            </div>
+          </div>
+          <div class="time-sep">:</div>
+          <div class="time-block">
+            <div class="time-card">
+              <span class="time-value" id="hours">00</span>
+              <span class="time-label">Horas</span>
+            </div>
+          </div>
+          <div class="time-sep">:</div>
+          <div class="time-block">
+            <div class="time-card">
+              <span class="time-value" id="minutes">00</span>
+              <span class="time-label">Min</span>
+            </div>
+          </div>
+          <div class="time-sep">:</div>
+          <div class="time-block">
+            <div class="time-card accent-card">
+              <span class="time-value" id="seconds">00</span>
+              <span class="time-label">Seg</span>
+            </div>
+          </div>
+        </div>
+        <div class="urgency-msg" id="urgency-msg"></div>
+      </div>
+
+      <div class="opening-match">
+        <div class="match-label">PARTIDO INAUGURAL</div>
+        <div class="match-info">
+          <span class="match-team"><img src="https://flagcdn.com/mx.svg" class="img-flag" alt="México"> México</span>
+          <span class="match-vs">VS</span>
+          <span class="match-team"><img src="https://flagcdn.com/us.svg" class="img-flag" alt="USA"> EE.UU.</span>
+        </div>
+        <div class="match-datetime-badge">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            Jueves, 11 de junio de 2026
+          </span>
+          <span class="badge-divider">|</span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            21:00h (hora española)
+          </span>
+        </div>
+        <div class="match-date">📍 SoFi Stadium, Los Ángeles, EE.UU.</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-number">48</div>
+          <div class="stat-desc">Equipos</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">104</div>
+          <div class="stat-desc">Partidos</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">16</div>
+          <div class="stat-desc">Sedes</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-desc">Países</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════ SPAIN MATCHES ════════ -->
+    <section class="spain-section" id="spain-matches">
+
+      <div class="section-header">
+        <h2 class="section-title">Partidos de España</h2>
+        <p class="section-subtitle">Grupo H · Fase de grupos · Horario peninsular español</p>
+      </div>
+
+      <div class="matches-grid">
+
+        <!-- Partido 1 -->
+        <article class="match-card" id="match-1">
+          <div class="match-card-number">01</div>
+          <div class="match-card-header">
+            <span class="match-card-phase">Fase de Grupos · Jornada 1</span>
+            <span class="match-card-countdown" data-match-date="2026-06-15T16:00:00Z" id="mc-countdown-1"></span>
+          </div>
+          <div class="match-card-teams">
+            <div class="mct-team">
+              <span class="mct-flag"><img src="https://flagcdn.com/es.svg" class="img-flag" alt="España"></span>
+              <span class="mct-name">España</span>
+            </div>
+            <div class="mct-vs-box">
+              <span class="mct-vs">VS</span>
+            </div>
+            <div class="mct-team mct-team--right">
+              <span class="mct-flag"><img src="https://flagcdn.com/cv.svg" class="img-flag" alt="Cabo Verde"></span>
+              <span class="mct-name">Cabo Verde</span>
+            </div>
+          </div>
+
+          <div class="match-datetime-badge">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg> Lun, 15 de jun.</span>
+            <span class="badge-divider">|</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg> 18:00h (España)</span>
+          </div>
+
+          <div class="match-card-details">
+            <div class="mcd-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span>Mercedes-Benz Stadium, Atlanta, EE.UU.</span>
+            </div>
+            <div class="mcd-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
+                <polyline points="17 2 12 7 7 2" />
+              </svg>
+              <span>La 1 (RTVE) · DAZN · GolStadium</span>
+            </div>
+          </div>
+          <div class="match-card-actions">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mundial+2026:+Espa%C3%B1a+vs+Cabo+Verde&dates=20260615T160000Z/20260615T180000Z&details=Fase+de+Grupos+Mundial+2026.+Retransmisi%C3%B3n+en+La+1+(RTVE),+DAZN,+GolStadium.&location=Mercedes-Benz+Stadium,+Atlanta,+EE.UU."
+              target="_blank" class="calendar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+                <line x1="12" y1="15" x2="12" y2="15" />
+              </svg>
+              Añadir al calendario
+            </a>
+          </div>
+        </article>
+
+        <!-- Partido 2 -->
+        <article class="match-card" id="match-2">
+          <div class="match-card-number">02</div>
+          <div class="match-card-header">
+            <span class="match-card-phase">Fase de Grupos · Jornada 2</span>
+            <span class="match-card-countdown" data-match-date="2026-06-21T16:00:00Z" id="mc-countdown-2"></span>
+          </div>
+          <div class="match-card-teams">
+            <div class="mct-team">
+              <span class="mct-flag"><img src="https://flagcdn.com/es.svg" class="img-flag" alt="España"></span>
+              <span class="mct-name">España</span>
+            </div>
+            <div class="mct-vs-box">
+              <span class="mct-vs">VS</span>
+            </div>
+            <div class="mct-team mct-team--right">
+              <span class="mct-flag"><img src="https://flagcdn.com/sa.svg" class="img-flag" alt="Arabia Saudí"></span>
+              <span class="mct-name">Arabia Saudí</span>
+            </div>
+          </div>
+
+          <div class="match-datetime-badge">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg> Dom, 21 de jun.</span>
+            <span class="badge-divider">|</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg> 18:00h (España)</span>
+          </div>
+
+          <div class="match-card-details">
+            <div class="mcd-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span>Mercedes-Benz Stadium, Atlanta, EE.UU.</span>
+            </div>
+            <div class="mcd-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
+                <polyline points="17 2 12 7 7 2" />
+              </svg>
+              <span>La 1 (RTVE) · DAZN · GolStadium</span>
+            </div>
+          </div>
+          <div class="match-card-actions">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mundial+2026:+Espa%C3%B1a+vs+Arabia+Saud%C3%AD&dates=20260621T160000Z/20260621T180000Z&details=Fase+de+Grupos+Mundial+2026.+Retransmisi%C3%B3n+en+La+1+(RTVE),+DAZN,+GolStadium.&location=Mercedes-Benz+Stadium,+Atlanta,+EE.UU."
+              target="_blank" class="calendar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+                <line x1="12" y1="15" x2="12" y2="15" />
+              </svg>
+              Añadir al calendario
+            </a>
+          </div>
+        </article>
+
+        <!-- Partido 3 -->
+        <article class="match-card match-card--night" id="match-3">
+          <div class="match-card-number">03</div>
+          <div class="match-card-header">
+            <span class="match-card-phase">Fase de Grupos · Jornada 3</span>
+            <span class="match-card-countdown" data-match-date="2026-06-27T00:00:00Z" id="mc-countdown-3"></span>
+          </div>
+          <div class="match-card-teams">
+            <div class="mct-team">
+              <span class="mct-flag"><img src="https://flagcdn.com/uy.svg" class="img-flag" alt="Uruguay"></span>
+              <span class="mct-name">Uruguay</span>
+            </div>
+            <div class="mct-vs-box">
+              <span class="mct-vs">VS</span>
+            </div>
+            <div class="mct-team mct-team--right">
+              <span class="mct-flag"><img src="https://flagcdn.com/es.svg" class="img-flag" alt="España"></span>
+              <span class="mct-name">España</span>
+            </div>
+          </div>
+
+          <div class="match-datetime-badge">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg> Sáb, 27 de jun.</span>
+            <span class="badge-divider">|</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg> 02:00h (España)</span>
+          </div>
+
+          <div class="match-card-details">
+            <div class="mcd-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span>Estadio Akron, Guadalajara, México</span>
+            </div>
+            <div class="mcd-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
+                <polyline points="17 2 12 7 7 2" />
+              </svg>
+              <span>La 1 (RTVE) · DAZN · GolStadium</span>
+            </div>
+          </div>
+          <div class="match-card-actions">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mundial+2026:+Uruguay+vs+Espa%C3%B1a&dates=20260627T000000Z/20260627T020000Z&details=Fase+de+Grupos+Mundial+2026.+Retransmisi%C3%B3n+en+La+1+(RTVE),+DAZN,+GolStadium.&location=Estadio+Akron,+Guadalajara,+M%C3%A9xico"
+              target="_blank" class="calendar-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+                <line x1="12" y1="15" x2="12" y2="15" />
+              </svg>
+              Añadir al calendario
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Info TV -->
+      <div class="tv-info-box">
+        <h3 class="tv-info-title">📡 Dónde ver el Mundial 2026 en España</h3>
+        <div class="tv-channels">
+          <a href="https://www.rtve.es/play/" target="_blank" class="tv-channel">
+            <div class="tv-channel-name">La 1 · RTVE Play</div>
+            <div class="tv-channel-desc">Gratis · Todos los partidos de España + 33 partidos del torneo</div>
+            <span class="tv-channel-tag tag-free">EN ABIERTO</span>
+          </a>
+          <a href="https://golstadium.es/" target="_blank" class="tv-channel">
+            <div class="tv-channel-name">GolStadium</div>
+            <div class="tv-channel-desc">Pago · Los 104 partidos · Canal dedicado 24h</div>
+            <span class="tv-channel-tag tag-pay">DE PAGO</span>
+          </a>
+          <a href="https://www.dazn.com/es-ES/" target="_blank" class="tv-channel">
+            <div class="tv-channel-name">DAZN</div>
+            <div class="tv-channel-desc">Pago · Cobertura completa del torneo</div>
+            <span class="tv-channel-tag tag-pay">DE PAGO</span>
+          </a>
+          <a href="https://www.movistarplus.es/" target="_blank" class="tv-channel">
+            <div class="tv-channel-name">Movistar Plus+</div>
+            <div class="tv-channel-desc">Pago · Acceso mediante acuerdo con Mediapro</div>
+            <span class="tv-channel-tag tag-pay">DE PAGO</span>
+          </a>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-title">Mundial 2026</span>
+      </div>
+      <p class="footer-copy">
+        © 2026 Creado por Jorge Mompéan Cabezas. Todos los derechos reservados.
+      </p>
+      <p class="footer-disclaimer">
+        Información de partidos basada en datos oficiales FIFA. Los horarios pueden estar sujetos a cambios.
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
