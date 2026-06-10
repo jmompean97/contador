@@ -1,7 +1,7 @@
 'use strict';
 
 // ── CONFIG ──────────────────────────────────────
-const WORLD_CUP_START = new Date('2026-06-11T02:00:00Z');
+const WORLD_CUP_START = new Date('2026-06-11T19:00:00Z'); // MEX vs RSA · 21:00h España (CEST)
 
 // ── DOM ─────────────────────────────────────────
 const elDays    = document.getElementById('days');
